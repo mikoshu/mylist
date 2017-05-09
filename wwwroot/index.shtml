@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>list</title>
+	<meta name="viewport" content="width=1080,user-scalable=no" />
+	<link rel="stylesheet" href="css/style.css">
+	<script src="js/jquery.min.js" ></script>
+</head>
+<body>
+	<div class="box" id="box">
+		
+	</div>
+
+	<script>
+	$(document).ready(function(){
+		$.ajax({
+			url: 'http://192.168.1.109/wordpress/api/get_recent_posts/?read_more=More&count=8',
+			dataType: "jsonp",
+            jsonp: "callback",//传递给请求处理程序或页面的，用以获得jsonp回调函数名的参数名(一般默认为:callback)
+            jsonpCallback:"flightHandler",//自定义的jsonp回调函数名称，默认为jQuery自动生成的随机函数名，也可以写"?"，jQuery会自动为你处理数据
+		    success: function(data){
+		        console.log(data);
+		        var html = '';
+		        data.posts.map(function(val,i){
+		        	html += '<a href="article.html?id='+val.id+'" class="msg">'+
+							'<h3>'+val.title+'</h3>'+
+							'<p>'+val.modified+'</p>'+
+						'</a>';
+		        });
+		        $("#box").html(html);
+		    },
+			
+		})
+	});
+	</script>
+</body>
+</html>
